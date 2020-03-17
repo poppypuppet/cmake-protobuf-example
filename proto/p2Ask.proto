@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package p2;
+
+message Ask {
+    int32 id = 9999;
+}

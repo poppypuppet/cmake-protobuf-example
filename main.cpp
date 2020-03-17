@@ -9,12 +9,13 @@
 #include "proto/message.pb.h"
 #include "proto/ask.pb.h"
 
-
 using namespace std;
 using namespace google::protobuf;
 using namespace google::protobuf::io;
 using namespace google::protobuf::compiler;
 
+const FileDescriptor *AddProtoFileToDescriptorPool(string proto_filename,
+                                                   DescriptorPool *descriptorPool);
 
 bool DescriptorContainsMessageOfType(const Descriptor *des,
                                      const char *messageType);
@@ -32,35 +33,43 @@ int main(int argc, char **argv) {
     string message_name = "message.MSG";
     string ask_name = "message.ASK";
 
+    string p1ask_name = "p1.Ask";
+    string p2ask_name = "p2.Ask";
+    string p1ask_proto_filename = "../proto/p1Ask.proto";
+    string p2ask_proto_filename = "../proto/p2Ask.proto";
+
     vector<string> data_filenames;
 
     DescriptorPool descriptorPool;
     DynamicMessageFactory factory;
 
-    // add message.MSG to DescriptorPool
-    FileDescriptorProto message_file_desc_proto;
-    GetMessageTypeFromProtoFile(message_proto_filename, &message_file_desc_proto);
-    const FileDescriptor *message_file_descriptor = descriptorPool.BuildFile(message_file_desc_proto);
-    cout << "message_file_descriptor" << endl;
-    cout << message_file_descriptor->DebugString() << endl;
+    cout << "Add message.MSG to DescriptorPool" << endl;
+    AddProtoFileToDescriptorPool(message_proto_filename, &descriptorPool);
+    cout << "Add p1.Ask to DescriptorPool" << endl;
+    AddProtoFileToDescriptorPool(p1ask_proto_filename, &descriptorPool);
+    cout << "Add p2.Ask to DescriptorPool" << endl;
+    AddProtoFileToDescriptorPool(p2ask_proto_filename, &descriptorPool);
 
-    // add ask.MSG to DescriptorPool
-    FileDescriptorProto ask_file_desc_proto;
-    GetMessageTypeFromProtoFile(ask_proto_filename, &ask_file_desc_proto);
-    const FileDescriptor *ask_file_descriptor = descriptorPool.BuildFile(ask_file_desc_proto);
-    cout << "ask_file_descriptor" << endl;
-    cout << ask_file_descriptor->DebugString() << endl;
+    try {
+        cout << "Verify DescriptorPool can find this " << message_name << endl;
+        const Descriptor *message_desc = descriptorPool.FindMessageTypeByName(message_name);
+        if (message_desc != nullptr) {
+            cout << message_desc->DebugString() << endl;
+        }
 
-    // verify DescriptorPool can find this type
-    const Descriptor *message_desc = descriptorPool.FindMessageTypeByName(message_name);
-    if (message_desc != nullptr) {
-        cout << message_desc->DebugString() << endl;
-    }
+        cout << "Verify DescriptorPool can find this " << p1ask_name << endl;
+        const Descriptor *ask_desc = descriptorPool.FindMessageTypeByName(p1ask_name);
+        if (ask_desc != nullptr) {
+            cout << ask_desc->DebugString() << endl;
+        }
 
-    // verify DescriptorPool can find this type
-    const Descriptor *ask_desc = descriptorPool.FindMessageTypeByName(ask_name);
-    if (message_desc != nullptr) {
-        cout << ask_desc->DebugString() << endl;
+        cout << "Verify DescriptorPool can find this " << p2ask_name << endl;
+        const Descriptor *ask2_desc = descriptorPool.FindMessageTypeByName(p2ask_name);
+        if (ask_desc != nullptr) {
+            cout << ask2_desc->DebugString() << endl;
+        }
+    } catch (const std::exception &e) {
+        std::cout << e.what();
     }
 
     // write to log files
@@ -85,6 +94,15 @@ int main(int argc, char **argv) {
     cout << "Hello Proto!" << endl;
 
     return 0;
+}
+
+const FileDescriptor *AddProtoFileToDescriptorPool(string proto_filename, DescriptorPool *descriptorPool) {
+    FileDescriptorProto file_desc_proto;
+    GetMessageTypeFromProtoFile(proto_filename, &file_desc_proto);
+    const FileDescriptor *file_descriptor = descriptorPool->BuildFile(file_desc_proto);
+    cout << "file_descriptor" << endl;
+    cout << file_descriptor->DebugString() << endl;
+    return file_descriptor;
 }
 
 void GetMessageTypeFromProtoFile(const string &proto_filename, FileDescriptorProto *file_desc_proto) {
