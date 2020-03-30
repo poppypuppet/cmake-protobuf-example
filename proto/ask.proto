@@ -2,6 +2,6 @@ syntax = "proto3";
 
 package message;
 
-message ASK {
+message Ask {
     int32 id = 9999;
 }

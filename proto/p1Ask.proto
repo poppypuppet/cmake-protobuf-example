@@ -2,6 +2,8 @@ syntax = "proto3";
 
 package p1;
 
+import "ask.proto";
+
 message Ask {
     string id = 1;
 }

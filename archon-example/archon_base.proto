@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package archon_video;
+
+message Base {
+    int32 height = 1;
+}
