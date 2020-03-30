@@ -93,7 +93,13 @@ void EncodeDynamicProtoSchema(DynamicMessageFactory *dmf, DescriptorPool *dp, co
 }
 
 void DecodeDynamicProtoSchema(DiskSourceTree *sourceTree) {
-    importProtoFile(sourceTree, "archon_video.proto");
+    const FileDescriptor *fd = importProtoFile(sourceTree, "archon_video.proto");
+    if (fd != nullptr) {
+        const Descriptor *descriptor = fd->FindMessageTypeByName("archon_video.VideoFrame");
+        if (descriptor != nullptr) {
+            cout << descriptor->DebugString() << endl;
+        }
+    }
 }
 
 void DecodeDynamicProtoSchemaInOrder(DescriptorPool *descriptorPool, DiskSourceTree *sourceTree) {
