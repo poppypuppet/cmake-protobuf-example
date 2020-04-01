@@ -1,0 +1,57 @@
+syntax = "proto3";
+
+package diagnostics;
+
+import "archon.proto";
+
+option go_package = "diagnostics";
+option csharp_namespace = "Archon.Diagnostics";
+
+message NodePin {
+    string pinName = 1;
+    string type = 2;
+    archon.SharedBufferHandle frame_buffer = 3;
+}
+
+enum NodeSettingType {
+    INT = 0;
+    DOUBLE = 1;
+    STRING = 2;
+    BOOL = 3;
+    ENUM = 4;
+}
+
+message NodeSetting {
+    string name = 1;
+    NodeSettingType type = 2;
+    string value = 3;
+}
+
+message GraphNode {
+    string id = 1;
+    int32 agentPid = 2;
+    string agentServer = 3;
+    int32 nodeCount = 4;
+    repeated NodePin inputs = 5;
+    repeated NodePin outputs = 6;
+    repeated NodeSetting settings = 7;
+}
+
+message GraphEdge {
+    string fromId = 1;
+    string toId = 2;
+    string outputName = 3;
+    string inputName = 4;
+}
+
+message GraphSyncGroup {
+    string syncGroupName = 1;
+    repeated GraphEdge edges = 2;
+}
+
+message Graph {
+    string name = 1;
+    repeated GraphNode nodes = 2;
+    repeated GraphEdge edges = 3;
+    repeated GraphSyncGroup syncGroups = 4;
+}
