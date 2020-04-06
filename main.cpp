@@ -16,7 +16,7 @@ using namespace google::protobuf;
 using namespace google::protobuf::io;
 using namespace google::protobuf::compiler;
 
-bool binFileToDescriptorPool(DescriptorPool *pool, const char *filePath);
+bool binFileToDescriptorPool(DescriptorPool *pool, const char *protoBinFilePath);
 
 unsigned long EncodeStaticProtoSchema();
 
@@ -32,7 +32,7 @@ string ask_data_filename = "ask.log";
 
 int main(int argc, char **argv) {
     DescriptorPool staticPool;
-    cout << "DecodeStaticProtoSchema=" << EncodeStaticProtoSchema() << endl;
+    cout << "EncodeStaticProtoSchema=" << EncodeStaticProtoSchema() << endl;
     cout << "DecodeStaticProtoSchema=" << DecodeStaticProtoSchema(&staticPool) << endl;
 
     DescriptorPool dynamicPool;
@@ -145,13 +145,13 @@ unsigned long EncodeStaticProtoSchema() {
     return endTime - startTime;
 }
 
-bool binFileToDescriptorPool(DescriptorPool *pool, const char *filePath) {
+bool binFileToDescriptorPool(DescriptorPool *pool, const char *protoBinFilePath) {
     std::ifstream bproto;
-    bproto.open(filePath, std::ifstream::in);
+    bproto.open(protoBinFilePath, std::ifstream::in);
 
     FileDescriptorSet fds{};
     if (!fds.ParseFromIstream(&bproto)) {
-        cout << "Failed to parse binary schema file %s" << filePath << endl;
+        cout << "Failed to parse binary schema file %s" << protoBinFilePath << endl;
         return false;
     }
 

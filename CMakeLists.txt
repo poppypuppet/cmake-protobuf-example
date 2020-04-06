@@ -9,5 +9,5 @@ include_directories(${PROTOBUF_INCLUDE_DIRS})
 
 INCLUDE_DIRECTORIES(${CMAKE_CURRENT_BINARY_DIR})
 
-ADD_EXECUTABLE(main main.cpp ArchonErrorCollector.h draft.h)
+ADD_EXECUTABLE(main main.cpp ArchonErrorCollector.h draft.h ProtobufParser.h)
 TARGET_LINK_LIBRARIES(main proto ${PROTOBUF_LIBRARY})

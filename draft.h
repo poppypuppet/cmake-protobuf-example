@@ -1,7 +1,3 @@
-//
-// Created by Ren Kazanin on 3/31/20.
-//
-
 #ifndef RPC_DRAFT_H
 #define RPC_DRAFT_H
 
