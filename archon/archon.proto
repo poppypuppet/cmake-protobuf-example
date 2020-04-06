@@ -1,0 +1,65 @@
+syntax = "proto3";
+
+package archon;
+
+message SharedBufferHandle {
+    string handle = 1;
+}
+
+enum SystemState {
+    SYSTEM_STATE_NONE = 0;
+    SYSTEM_STATE_STARTED = 1;
+    SYSTEM_STATE_STOPPED = 2;
+    SYSTEM_STATE_INITIALIZED = 3;
+    SYSTEM_STATE_FAULTED = 4;
+}
+
+enum LogLevel {
+    LOG_LEVEL_NONE = 0;
+    LOG_LEVEL_VERBOSE = 1;
+    LOG_LEVEL_INFO = 2;
+    LOG_LEVEL_WARNING = 3;
+    LOG_LEVEL_ERROR = 4;
+}
+
+message StateValue {
+    oneof state_value {
+        SystemState system_state_value = 1;
+        LogLevel log_level_value = 2;
+    }
+}
+
+message Control {
+    int32 request_id = 1;
+    StateValue requested_state = 2;
+}
+
+enum UpdateKind {
+    UPDATE_KIND_DESIRED = 0;
+    UPDATE_KIND_REPORTED = 1;
+}
+
+message SettingsUpdate {
+    UpdateKind kind = 1;
+    map<string, string> properties = 2;
+}
+
+message EventValue {
+    oneof value {
+        string string_value = 1;
+        double double_value = 2;
+    }
+}
+
+enum SeverityLevel {
+    SEVERITY_LEVEL_VERBOSE = 0;
+    SEVERITY_LEVEL_INFO = 1;
+    SEVERITY_LEVEL_WARNING = 2;
+    SEVERITY_LEVEL_CRITICAL = 3;
+}
+
+message TelemetryEvent {
+    string name = 1;
+    SeverityLevel severity_level = 2;
+    map<string, EventValue> properties = 3;
+}

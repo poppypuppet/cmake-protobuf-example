@@ -1,0 +1,43 @@
+syntax = "proto3";
+
+package archon_internal;
+
+import "archon.proto";
+
+// Target Input Map is a map from the previous node's Output to the current node's Input name
+// Input Schema Map is a map from the current node's Input name to its Schema
+// Output Schema Map is a map from the current node's Output name to its Schema
+message SingleEdgeIo {
+    map<string, string> target_input_map = 1;
+    map<string, string> input_schema_map = 2;
+    map<string, string> output_schema_map = 3;
+    archon.SharedBufferHandle sbh = 4;
+}
+
+// input_groups is a list of input groups that need to be delivered in sync.
+message SynchronizedInputGroups {
+    message IncomingEdge {
+        string from_output_name = 2;
+        string to_input_name = 3;
+    }
+    message InputGroup {
+        string name = 1;
+        int32 synchronization_precision_us = 2;
+        repeated IncomingEdge incoming_edges = 3;
+    }
+    repeated InputGroup input_groups = 1;
+}
+
+message NodeIoConfiguration {
+    SingleEdgeIo single_edge_io = 1;
+    SynchronizedInputGroups synchronized_input_groups = 2;
+}
+
+// Next Agent Map is a map from the Next Agent to a list of the currrent Agent's Outputs that should be passed to that agent
+message PeerConnections {
+    message OutputList {
+        repeated string outputs = 1;
+    }
+
+    map<string, OutputList> next_agent_map = 1;
+}

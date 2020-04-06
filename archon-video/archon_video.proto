@@ -1,0 +1,60 @@
+syntax = "proto3";
+
+import "archon.proto";
+
+package archon_video;
+
+enum FrameStatus {
+    FRAME_STATUS_VALID = 0;
+    FRAME_STATUS_EOF = 1;
+}
+
+enum FrameFormat {
+    FRAME_FORMAT_RAW = 0;
+}
+
+// The pixel format of the underlying buffer as a FourCC value (little endian)
+// Values are provided in the enum for popular formats, however, any FourCC value may be provided
+enum PixelFormat {
+    PIXEL_FORMAT_UNKNOWN = 0;
+    PIXEL_FORMAT_RGB = 0x32424752; // RGB2
+    PIXEL_FORMAT_RGBA = 0x41424752; // RGBA
+    PIXEL_FORMAT_Y8 = 0x20203859; // Y8  
+    PIXEL_FORMAT_Y16 = 0x20363159; // Y16 
+    PIXEL_FORMAT_IYUV = 0x56555949; // IYUV
+    PIXEL_FORMAT_NV12 = 0x3231564E; // NV12
+    PIXEL_FORMAT_YUY2 = 0x32595559; // YUY2
+}
+
+enum SourceKind {
+    SOURCE_KIND_UNKNOWN = 0;
+    SOURCE_KIND_COLOR = 1;
+    SOURCE_KIND_DEPTH = 2;
+    SOURCE_KIND_INFRARED = 3;
+}
+
+message FrameMetadata {
+    int32 height = 1;
+    int32 width = 2;
+    PixelFormat pixel_format = 3;
+    FrameFormat frame_format = 4;
+    int64 scan0_offset = 5;
+    int64 stride = 6;
+}
+
+message VideoFrame {
+    double fps = 1;
+    int64 frame_id = 2;
+    string source_id = 3;
+    int64 frame_buffer_size = 4;
+    string frame_timestamp = 5;
+    int64 frame_timestamp_in_ms = 6;
+    FrameStatus frame_status = 7;
+    FrameMetadata frame_metadata = 8;
+    archon.SharedBufferHandle frame_buffer = 9;
+    SourceKind source_kind = 10;
+}
+
+message FrameSet {
+    map<string, VideoFrame> frames = 1;
+}
