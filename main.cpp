@@ -1,11 +1,13 @@
 #include <iostream>
 #include <fstream>
 
-#include<time.h>
+#include<ctime>
 
 #include <google/protobuf/descriptor.h>
 #include <google/protobuf/dynamic_message.h>
 #include <google/protobuf/compiler/parser.h>
+#include <google/protobuf/util/json_util.h>
+
 
 #include "proto/ask.pb.h"
 
@@ -28,6 +30,8 @@ unsigned long DecodeDynamicProtoSchema(DiskSourceTree *sourceTree);
 
 unsigned long DecodeDynamicProtoSchemaInOrder(DescriptorPool *descriptorPool, DiskSourceTree *sourceTree);
 
+void SerializeMsgToJson();
+
 string ask_data_filename = "ask.log";
 
 int main(int argc, char **argv) {
@@ -45,11 +49,25 @@ int main(int argc, char **argv) {
 
     DecodeDynamicProtoSchema(&sourceTree);
     cout << "DecodeDynamicProtoSchemaInOrder=" << DecodeDynamicProtoSchemaInOrder(&dynamicPool, &sourceTree) << endl;
-    cout << "EncodeDynamicProtoSchema=" << EncodeDynamicProtoSchema(&factory, &dynamicPool, "diagnostics.NodePin");
+    cout << "EncodeDynamicProtoSchema=" << EncodeDynamicProtoSchema(&factory, &dynamicPool, "diagnostics.NodePin") << endl;
+
+    SerializeMsgToJson();
 
     cout << "Hello Proto!" << endl;
 
     return 0;
+}
+
+void SerializeMsgToJson() {
+    message::Ask ask;
+    ask.set_id(12345678);
+    std::string strMsg;
+    google::protobuf::util::JsonOptions stOpt;
+    stOpt.always_print_enums_as_ints = true;
+    stOpt.always_print_primitive_fields = true;
+    stOpt.preserve_proto_field_names = true;
+    google::protobuf::util::MessageToJsonString(ask, &strMsg, stOpt);
+    cout << strMsg << endl;
 }
 
 unsigned long DecodeStaticProtoSchema(DescriptorPool *descriptorPool) {

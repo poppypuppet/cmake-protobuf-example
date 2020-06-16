@@ -28,7 +28,6 @@ void getMessageTypeFromProtoFile(const string &proto_filename, FileDescriptorPro
 
 const FileDescriptor *importProtoFileToDescriptorPool(SourceTreeDescriptorDatabase *stdd, const string &proto_filename, DescriptorPool *dp);
 
-
 const FileDescriptor *importProtoFileToDescriptorPool(SourceTreeDescriptorDatabase *stdd, const string &proto_filename, DescriptorPool *dp) {
     FileDescriptorProto fdp;
     cout << "FileDescriptorProto" << proto_filename << endl;
@@ -44,7 +43,6 @@ const FileDescriptor *importProtoFileToDescriptorPool(SourceTreeDescriptorDataba
     return fd;
 }
 
-
 const FileDescriptor *addProtoFileToDescriptorPool(string proto_filename, DescriptorPool *dp) {
     FileDescriptorProto fdp;
     getMessageTypeFromProtoFile(proto_filename, &fdp);
@@ -53,11 +51,8 @@ const FileDescriptor *addProtoFileToDescriptorPool(string proto_filename, Descri
     if (fd != nullptr) {
         cout << fd->DebugString() << endl;
     }
-
-
     return fd;
 }
-
 
 void getMessageTypeFromProtoFile(const string &proto_filename, FileDescriptorProto *file_desc_proto) {
     FILE *proto_file = fopen(proto_filename.c_str(), "r");
@@ -111,6 +106,5 @@ const Descriptor *verifyDescriptorPoolCanFind(DescriptorPool *descriptorPool, co
     }
     return descriptor;
 }
-
 
 #endif //RPC_DRAFT_H
