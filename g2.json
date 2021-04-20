@@ -1,0 +1,70 @@
+{
+  "eventType": "TwinConfigUpdate",
+  "eventData": {
+    "globalSettings": {
+      "platformTelemetryEnabled": false,
+      "customerTelemetryEnabled": false,
+      "platformLogLevel": "verbose",
+      "nodesLogLevel": null,
+      "diagnosticsEnabled": false
+    },
+    "graphs": {
+      "cognitiveservices_vision_spatialanalysis_1": {
+        "location": null,
+        "operationId": "cognitiveservices.vision.spatialanalysis",
+        "version": null,
+        "enabled": true,
+        "platformLogLevel": null,
+        "nodesLogLevel": null,
+        "parameters": null,
+        "sharedNodes": {
+          "sharedDetector": {
+            "node": "SpatialAnalysisGraph/detector",
+            "parameters": {
+              "DETECTOR_NODE_CONFIG": "{\"gpu_index\":1,\"batch_size\":1,\"do_calibration\":true,\"enable_recalibration\":true}"
+            }
+          }
+        },
+        "instances": {
+          "0": {
+            "enabled": true,
+            "platformLogLevel": null,
+            "nodesLogLevel": null,
+            "parameters": {
+              "VIDEO_URL": "https://teamfileshare.blob.core.windows.net/samplevideos/lobby1.mp4?****",
+              "VIDEO_SOURCE_ID": "test0",
+              "VIDEO_IS_LIVE": true,
+              "VIDEO_DECODE_GPU_INDEX": 1,
+              "SPACEANALYTICS_CONFIG": "{\"zones\":[{\"name\":\"queue\",\"polygon\":[[0.3,0.3],[0.3,0.9],[0.6,0.9],[0.6,0.3],[0.3,0.3]], \"events\": [{\"type\":\"count\", \"config\":{\"trigger\": \"event\", \"threshold\":16.0, \"focus\": \"footprint\"}}]}]}",
+              "ENABLE_FACE_MASK_CLASSIFIER": false,
+              "ENABLE_PERSONATTRIBUTESCLASSIFICATION": false,
+              "ENABLE_PERSONATTRIBUTES_TRAININGIMAGECOLLECTION": false
+            },
+            "sharedNodeMap": {
+              "SpatialAnalysisGraph/detector": "sharedDetector"
+            }
+          },
+          "1": {
+            "enabled": true,
+            "platformLogLevel": null,
+            "nodesLogLevel": null,
+            "parameters": {
+              "VIDEO_URL": "https://teamfileshare.blob.core.windows.net/samplevideos/lobby1.mp4?****",
+              "VIDEO_SOURCE_ID": "1",
+              "VIDEO_IS_LIVE": true,
+              "VIDEO_DECODE_GPU_INDEX": 1,
+              "SPACEANALYTICS_CONFIG": "{\"zones\":[{\"name\":\"queue\",\"polygon\":[[0.3,0.3],[0.3,0.9],[0.6,0.9],[0.6,0.3],[0.3,0.3]], \"events\": [{\"type\":\"count\", \"config\":{\"trigger\": \"event\", \"threshold\":16.0, \"focus\": \"footprint\"}}]}]}",
+              "ENABLE_FACE_MASK_CLASSIFIER": false,
+              "ENABLE_PERSONATTRIBUTESCLASSIFICATION": false,
+              "ENABLE_PERSONATTRIBUTES_TRAININGIMAGECOLLECTION": false
+            },
+            "sharedNodeMap": {
+              "SpatialAnalysisGraph/detector": "sharedDetector"
+            }
+          }
+        }
+      }
+    },
+    "version": null
+  }
+}

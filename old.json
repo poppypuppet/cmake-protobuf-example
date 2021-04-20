@@ -1,0 +1,78 @@
+{
+  "cognitiveservices_vision_spatialanalysis_1": {
+    "LocalPath": "",
+    "Location": "",
+    "OperationId": "cognitiveservices.vision.spatialanalysis",
+    "SkillId": "",
+    "Version": 0,
+    "Enabled": true,
+    "PlatformLogLevel": "",
+    "NodesLogLevel": "",
+    "Parameters": {},
+    "Instances": {
+      "0": {
+        "Enabled": true,
+        "PlatformLogLevel": null,
+        "NodesLogLevel": null,
+        "Parameters": {
+          "ENABLE_FACE_MASK_CLASSIFIER": "false",
+          "ENABLE_PERSONATTRIBUTESCLASSIFICATION": "false",
+          "ENABLE_PERSONATTRIBUTES_TRAININGIMAGECOLLECTION": "false",
+          "SPACEANALYTICS_CONFIG": "{\"zones\":[{\"name\":\"queue\",\"polygon\":[[0.3,0.3],[0.3,0.9],[0.6,0.9],[0.6,0.3],[0.3,0.3]], \"events\": [{\"type\":\"count\", \"config\":{\"trigger\": \"event\", \"threshold\":16.0, \"focus\": \"footprint\"}}]}]}",
+          "VIDEO_DECODE_GPU_INDEX": "1",
+          "VIDEO_IS_LIVE": "true",
+          "VIDEO_SOURCE_ID": "0",
+          "VIDEO_URL": "https://teamfileshare.blob.core.windows.net/samplevideos/lobby1.mp4?****"
+        },
+        "SharedNodeMap": {
+          "SpatialAnalysisGraph/detector": "sharedDetector"
+        },
+        "Environment": null
+      },
+      "1": {
+        "Enabled": true,
+        "PlatformLogLevel": null,
+        "NodesLogLevel": null,
+        "Parameters": {
+          "ENABLE_FACE_MASK_CLASSIFIER": "false",
+          "ENABLE_PERSONATTRIBUTESCLASSIFICATION": "false",
+          "ENABLE_PERSONATTRIBUTES_TRAININGIMAGECOLLECTION": "false",
+          "SPACEANALYTICS_CONFIG": "{\"zones\":[{\"name\":\"queue\",\"polygon\":[[0.3,0.3],[0.3,0.9],[0.6,0.9],[0.6,0.3],[0.3,0.3]], \"events\": [{\"type\":\"count\", \"config\":{\"trigger\": \"event\", \"threshold\":16.0, \"focus\": \"footprint\"}}]}]}",
+          "VIDEO_DECODE_GPU_INDEX": "1",
+          "VIDEO_IS_LIVE": "true",
+          "VIDEO_SOURCE_ID": "1",
+          "VIDEO_URL": "https://teamfileshare.blob.core.windows.net/samplevideos/lobby1.mp4?****"
+        },
+        "SharedNodeMap": {
+          "SpatialAnalysisGraph/detector": "sharedDetector"
+        },
+        "Environment": null
+      },
+      "test": {
+        "Enabled": null,
+        "PlatformLogLevel": null,
+        "NodesLogLevel": null,
+        "Parameters": null,
+        "SharedNodeMap": null,
+        "Environment": null
+      },
+      "test1": {
+        "Enabled": null,
+        "PlatformLogLevel": null,
+        "NodesLogLevel": null,
+        "Parameters": null,
+        "SharedNodeMap": null,
+        "Environment": null
+      }
+    },
+    "SharedNodes": {
+      "sharedDetector": {
+        "Node": "SpatialAnalysisGraph/detector",
+        "Parameters": {
+          "DETECTOR_NODE_CONFIG": "{\"gpu_index\":1,\"batch_size\":1,\"do_calibration\":true,\"enable_recalibration\":true}"
+        }
+      }
+    },
+    "Environments": null
+  }
+}
